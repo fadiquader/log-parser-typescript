@@ -1,10 +1,9 @@
 import commandLineArgs from 'command-line-args'
-import {createLogParser} from "./create-log-parser";
-import {DEFAULT_JSON_PATTERN, LogLevel} from "./utils/constants";
-import {LogJsonFile} from "./transports/log-json-file";
-import {JsonLogParser} from "./log-parser/json-log-parser";
-import {LogEventFormatter} from "./log-event-formatter";
-
+import { createLogParser } from "./log-parser";
+import { LogJsonFile } from "./transports/log-json-file";
+import { JsonLogParser } from "./log-parser/json-log-parser";
+import { LogEventFormatter } from "./log-event-formatter";
+import { DEFAULT_JSON_PATTERN, LogLevel } from "./utils/constants";
 
 const commandLineOptions = commandLineArgs([
   { name: 'input', type: String },
@@ -23,6 +22,7 @@ const parser = createLogParser({
 });
 
 const startTime = new Date().getTime();
+
 parser.process()
   .then(() => {
     const diffInSeconds = (new Date().getTime() - startTime) / 1000

@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import {LogLevel} from "./constants";
+import { LogLevel } from "../utils/constants";
 
 export const logParserOptionsSchema = yup.object({
   inputFile: yup.string().required(),

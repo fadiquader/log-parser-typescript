@@ -1,19 +1,13 @@
-interface LogData {
-  transactionId: string
-  details: string
-  [name: string]: any
-}
+import { LogEventInterface } from "./log-event.interface";
+import { LogEventDataInterface } from "./log-event-data.interface";
 
-interface LogEventInterface {
-  timestamp: string | number
-  level: string
-  data: string
-}
-
+/**
+ * Formats parsed log objects to pipe into a file or something else later.
+ */
 export class LogEventFormatter {
   timestamp: number
   level: string
-  data: LogData
+  data: LogEventDataInterface
 
   constructor(logEvent: LogEventInterface) {
     this.timestamp = new Date(logEvent.timestamp).getTime()
@@ -21,7 +15,7 @@ export class LogEventFormatter {
     this.data = JSON.parse(logEvent.data || '{}')
   }
 
-  toString() {
+  toString(): string {
     return JSON.stringify({
       timestamp: this.timestamp,
       level: this.level,

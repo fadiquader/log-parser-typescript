@@ -1,6 +1,7 @@
-import fs, {WriteStream} from "fs";
-import {Transport} from './transport';
+import fs, { WriteStream } from "fs";
 import { once } from 'events';
+import { Transport } from './transport';
+
 /**
  * Pipes logs into a json file as an array of objects.
  */
