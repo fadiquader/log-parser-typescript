@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { once } from 'events';
 import readline from 'readline'
-import {ParserInterface} from './parser/parser.interface';
+import {LogParserInterface} from './log-parser/log-parser.interface';
 import { LogLevel} from "./utils/constants";
 import {FileNotFoundError} from "./custom-erros/file-not-found-error";
 import {logParserOptionsSchema} from "./utils/log-parser-options-schema";
@@ -11,8 +11,8 @@ import {Transport} from "./transports/transport";
 interface LogParserOptionsInterface {
   inputFile: string;
   level: LogLevel;
-  parser?: ParserInterface;
-  transports: Transport[]
+  parser: LogParserInterface;
+  transports: Transport[];
   formatter?(log: any): string;
 }
 

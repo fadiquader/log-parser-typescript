@@ -1,10 +1,10 @@
 import grokJS, {GrokPattern} from "grok-js";
-import {ParserInterface} from "./parser.interface";
+import {LogParserInterface} from "./log-parser.interface";
 import {InvalidJsonPatternError} from "../custom-erros/invalid-json-pattern-error";
 
 const patterns = grokJS.loadDefaultSync();
 
-export class JsonParser implements ParserInterface {
+export class JsonLogParser implements LogParserInterface {
   private readonly _pattern: GrokPattern;
 
   constructor(expression: string) {
@@ -12,11 +12,11 @@ export class JsonParser implements ParserInterface {
   }
 
   parse(line: string): { [key: string]: string } {
-    const jsonObj = this._pattern.parseSync(line)
-    if (jsonObj === null) {
+    const log = this._pattern.parseSync(line)
+    if (log === null) {
       throw new InvalidJsonPatternError(line)
     }
 
-    return jsonObj;
+    return log;
   }
 }

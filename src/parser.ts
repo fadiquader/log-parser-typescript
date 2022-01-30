@@ -1,7 +1,9 @@
 import commandLineArgs from 'command-line-args'
 import {createLogParser} from "./create-log-parser";
-import {LogLevel} from "./utils/constants";
+import {DEFAULT_JSON_PATTERN, LogLevel} from "./utils/constants";
 import {LogJsonFile} from "./transports/log-json-file";
+import {JsonLogParser} from "./log-parser/json-log-parser";
+import {LogEventFormatter} from "./log-event-formatter";
 
 
 const commandLineOptions = commandLineArgs([
@@ -13,6 +15,8 @@ const commandLineOptions = commandLineArgs([
 const parser = createLogParser({
   inputFile: commandLineOptions.input || 'app.log',
   level: LogLevel.ERROR,
+  parser: new JsonLogParser(DEFAULT_JSON_PATTERN),
+  formatter: (log: any): string => new LogEventFormatter(log).toString(),
   transports: [
     new LogJsonFile(commandLineOptions.output || 'output.json')
   ],
@@ -25,7 +29,7 @@ parser.process()
     console.log(`⏰  Done in ${diffInSeconds}s.`)
     process.exit(0)
   })
-  .catch(() => {
+  .catch(_ => {
     console.error('Failed')
     process.exit(0)
   });
