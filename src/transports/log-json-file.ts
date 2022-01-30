@@ -1,27 +1,36 @@
 import fs, {WriteStream} from "fs";
-import util from 'util';
 import {Transport} from './transport';
-
+import { once } from 'events';
+/**
+ * Pipes logs into a json file as an array of objects.
+ */
 export class LogJsonFile implements Transport {
   filename: string
   hasData: boolean = false
   outputFile: WriteStream
   constructor(filename: string) {
+    if (!filename) {
+      throw new Error('filename is required')
+    }
     this.filename = filename;
     this.outputFile = fs.createWriteStream(this.filename);
-    util.promisify(this.outputFile.write)
   }
 
-  async write(line: string) {
+  write(line: string) {
     if (this.hasData) {
-      await this.outputFile.write(`, ${line}\n`)
+      this.outputFile.write(`,\n${line}`)
     } else {
-      await this.outputFile.write(`[\n${line}\n`)
+      this.outputFile.write(`[${line}`)
+      this.hasData = true
     }
   }
 
   async close() {
-    await this.outputFile.write(']')
+    if (this.hasData) {
+      this.outputFile.write(']');
+    }
+
     this.outputFile.close();
+    await once(this.outputFile, 'close');
   }
 }

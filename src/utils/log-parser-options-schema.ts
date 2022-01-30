@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import {DEFAULT_JSON_PATTERN, LogLevel} from "./constants";
-import {JsonParser} from "../json-parser";
+import {JsonParser} from "../parser/json-parser";
 import {LogEventFormatter} from "../log-event-formatter";
 
 export const logParserOptionsSchema = yup.object({

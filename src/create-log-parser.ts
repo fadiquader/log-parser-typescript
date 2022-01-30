@@ -1,8 +1,7 @@
 import fs from 'fs';
 import { once } from 'events';
-
 import readline from 'readline'
-import {ParserInterface} from "./parser.interface";
+import {ParserInterface} from './parser/parser.interface';
 import { LogLevel} from "./utils/constants";
 import {FileNotFoundError} from "./custom-erros/file-not-found-error";
 import {logParserOptionsSchema} from "./utils/log-parser-options-schema";
@@ -44,9 +43,10 @@ export function createLogParser(opts: LogParserOptionsInterface) {
       }
     }
 
-    async processLineByLine() {
+    async process() {
       const rl = this.createReadLine();
       rl.on('line', async (line: string) => {
+        process.stdout.write('.');
         const log = options.parser.parse(line)
         if (log.level !== options.level) return;
 
@@ -56,6 +56,7 @@ export function createLogParser(opts: LogParserOptionsInterface) {
 
       await once(rl, 'close');
       await this.closeTransports()
+      console.log();
     }
   }
 

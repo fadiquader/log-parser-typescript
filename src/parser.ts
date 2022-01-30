@@ -18,11 +18,14 @@ const parser = createLogParser({
   ],
 });
 
-parser.processLineByLine()
+const startTime = new Date().getTime();
+parser.process()
   .then(() => {
-    console.log('Done!')
+    const diffInSeconds = (new Date().getTime() - startTime) / 1000
+    console.log(`⏰  Done in ${diffInSeconds}s.`)
     process.exit(0)
   })
   .catch(() => {
+    console.error('Failed')
     process.exit(0)
-  })
+  });
