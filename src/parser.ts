@@ -1,6 +1,6 @@
 import commandLineArgs from 'command-line-args'
 import { createLogParser } from "./log-parser";
-import { LogJsonFile } from "./transports/log-json-file";
+import { JsonLogFile } from "./transports/json-log-file";
 import { JsonLogParser } from "./log-parser/json-log-parser";
 import { LogEventFormatter } from "./log-event-formatter";
 import { DEFAULT_JSON_PATTERN, LogLevel } from "./utils/constants";
@@ -10,26 +10,25 @@ const commandLineOptions = commandLineArgs([
   { name: 'output', type: String },
 ]);
 
-
 const parser = createLogParser({
-  inputFile: commandLineOptions.input || 'app.log',
+  inputFile: commandLineOptions.input,
   level: LogLevel.ERROR,
   parser: new JsonLogParser(DEFAULT_JSON_PATTERN),
   formatter: (log: any): string => new LogEventFormatter(log).toString(),
   transports: [
-    new LogJsonFile(commandLineOptions.output || 'output.json')
+    new JsonLogFile({ filename: commandLineOptions.output })
   ],
 });
 
 const startTime = new Date().getTime();
 
-parser.process()
-  .then(() => {
+parser.start()
+  .on('close', () => {
     const diffInSeconds = (new Date().getTime() - startTime) / 1000
-    console.log(`⏰  Done in ${diffInSeconds}s.`)
+    console.log(`\n⏰  Done in ${diffInSeconds}s.`)
     process.exit(0)
   })
-  .catch(_ => {
-    console.error('Failed')
+  .on('error', (err: Error) => {
+    console.error('Failed: ', err)
     process.exit(0)
   });

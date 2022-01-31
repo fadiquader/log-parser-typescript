@@ -1,19 +1,22 @@
 import fs, { WriteStream } from "fs";
 import { once } from 'events';
-import { Transport } from './transport';
+import { TransportInterface } from './transport.interface';
 
+interface JsonLogFileOptions {
+  filename: string
+}
 /**
  * Pipes logs into a json file as an array of objects.
  */
-export class LogJsonFile implements Transport {
+export class JsonLogFile implements TransportInterface {
   filename: string
   hasData: boolean = false
   outputFile: WriteStream
-  constructor(filename: string) {
-    if (!filename) {
+  constructor(opts: JsonLogFileOptions) {
+    if (!opts.filename) {
       throw new Error('filename is required')
     }
-    this.filename = filename;
+    this.filename = opts.filename;
     this.outputFile = fs.createWriteStream(this.filename);
   }
 

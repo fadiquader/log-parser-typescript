@@ -1,5 +1,5 @@
 ## How to use
-####Dev mode:
+###Dev mode:
 ```
 yarn install
 yarn dev
@@ -7,7 +7,7 @@ yarn dev
 // test
 yarn test
 ```
-####Production:
+###Production:
 
 ```
 yarn build

@@ -1,6 +1,6 @@
 import grokJS, { GrokPattern } from "grok-js";
 import { LogParserInterface } from "./log-parser.interface";
-import { InvalidJsonPatternError } from "../custom-erros/invalid-json-pattern-error";
+import { InvalidJsonPatternError } from './invalid-json-pattern-error';
 
 const patterns = grokJS.loadDefaultSync();
 
