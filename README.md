@@ -1,14 +1,15 @@
-## How to use
-### Dev mode:
+## Installation
+
+### Dev mode
 ```
 yarn install
 yarn dev
-
-// test
+```
+### Run Tests
+```
 yarn test
 ```
-### Production:
-
+### Usage
 ```
 yarn build
 cd build

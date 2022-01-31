@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --pretty --transpile-only src/parser.ts --input app.log --output output.json",
+    "dev": "ts-node-dev --respawn --pretty --transpile-only src/parser.ts --input example/app.log --output example/output.json",
     "build": "tsc -p tsconfig.build.json",
     "test": "jest -i"
   },
