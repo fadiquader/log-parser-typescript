@@ -1,13 +1,14 @@
 import fs from 'fs';
-// import { once } from 'events';
 import readline from 'readline'
 import { LogParserInterface } from './log-parser.interface';
 import { LogLevel } from "../utils/constants";
 import { FileNotFoundError } from "../custom-erros/file-not-found-error";
 import { logParserOptionsSchema } from "./log-parser-options-schema";
 import { TransportInterface } from "../transports/transport.interface";
+// {OnigRegExp, OnigScanner} = require 'oniguruma'
 
 
+// Object.getOwnPropertyDescriptor(OnigString.prototype, 'length')
 export interface LogParserOptionsInterface {
   inputFile: string;
   level: LogLevel;
@@ -38,12 +39,15 @@ export function createLogParser(opts: LogParserOptionsInterface) {
   class LogParser {
     started: boolean = false;
     subscriptions: EventSubscriptions
+    transports: TransportInterface[]
     constructor() {
       this.subscriptions = {
         [EventTypes.LINE]: [],
         [EventTypes.CLOSE]: [],
         [EventTypes.ERROR]: [],
       }
+
+      this.transports = options.transports;
     }
 
     createReadLine() {
@@ -74,15 +78,14 @@ export function createLogParser(opts: LogParserOptionsInterface) {
       return this;
     }
 
-    // can be static
-    async pipeLogEvent(line: string) {
-      for (const transport of options.transports) {
+    private async pipeLogEvent(line: string) {
+      for (const transport of this.transports) {
         await transport.write(line)
       }
     }
 
     async closeTransports() {
-      for (const transport of options.transports) {
+      for (const transport of this.transports) {
         await transport.close()
       }
     }
