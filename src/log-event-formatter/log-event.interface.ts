@@ -1,5 +1,5 @@
 export interface LogEventInterface {
   timestamp: string | number
-  level: string
+  logLevel: string
   data: string
 }

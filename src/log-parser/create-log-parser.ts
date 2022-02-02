@@ -104,7 +104,7 @@ export function createLogParser(opts: LogParserOptionsInterface) {
         process.stdout.write('.');
         try {
           const log = options.parser.parse(line)
-          if (log.level !== options.level) return;
+          if (log.logLevel !== options.level) return;
           const processedLog = options.formatter(log)
           await this.pipeLogEvent(processedLog)
           this.subscriptions[EventTypes.LINE].forEach(cb => cb(processedLog))

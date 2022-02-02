@@ -11,15 +11,15 @@ describe('LogEventFormatter class', () => {
   it('formats log event', () => {
     const formattedLogEvent = new LogEventFormatter(logEventObj)
     expect(formattedLogEvent.timestamp).toBe(new Date(logEventObj.timestamp).getTime())
-    expect(formattedLogEvent.data).toEqual(JSON.parse(logEventObj.data))
+    expect(formattedLogEvent.logLevel).toEqual('error')
   });
 
   it('stringifies log event object', () => {
     const formattedLogEvent = new LogEventFormatter(logEventObj);
     expect(formattedLogEvent.toString()).toMatch(JSON.stringify({
       timestamp: new Date(logEventObj.timestamp).getTime(),
-      level: 'error',
-      data: JSON.parse(logEventObj.data)
+      logLevel: 'error',
+      ...JSON.parse(logEventObj.data)
     }))
   })
 })

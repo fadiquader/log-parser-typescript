@@ -6,20 +6,20 @@ import { LogEventDataInterface } from "./log-event-data.interface";
  */
 export class LogEventFormatter {
   timestamp: number
-  level: string
+  logLevel: string
   data: LogEventDataInterface
 
   constructor(logEvent: LogEventInterface) {
     this.timestamp = new Date(logEvent.timestamp).getTime()
-    this.level = logEvent.level
+    this.logLevel = logEvent.logLevel
     this.data = JSON.parse(logEvent.data || '{}')
   }
 
   toString(): string {
     return JSON.stringify({
       timestamp: this.timestamp,
-      level: this.level,
-      data: this.data
+      logLevel: this.logLevel,
+      ...this.data
     })
   }
 }

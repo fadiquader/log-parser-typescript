@@ -5,4 +5,4 @@ export enum LogLevel {
   DEBUG = 'debug',
 }
 
-export const DEFAULT_JSON_PATTERN = '%{TIMESTAMP_ISO8601:timestamp} - %{LOGLEVEL:level} - %{GREEDYDATA:data}'
+export const DEFAULT_JSON_PATTERN = '%{TIMESTAMP_ISO8601:timestamp} - %{LOGLEVEL:logLevel} - %{GREEDYDATA:data}'

@@ -11,7 +11,7 @@ describe('JsonLogParser class', () => {
     const jsonLogParser: JsonLogParser = new JsonLogParser(DEFAULT_JSON_PATTERN)
     const logObj = jsonLogParser.parse(logStr)
     expect(logObj.timestamp).toMatch('2022-08-09T02:12:51.259Z')
-    expect(logObj.level).toMatch('error')
+    expect(logObj.logLevel).toMatch('error')
     expect(logObj.data).toEqual(
       '{"transactionId":"9abc55b2-807b-4361-9dbe-aa88b1b2e979",' +
       '"details":"Cannot find user orders list","code": 404,"err":"Not found"}'
