@@ -5,10 +5,7 @@ import { LogLevel } from "../utils/constants";
 import { FileNotFoundError } from "../custom-erros/file-not-found-error";
 import { logParserOptionsSchema } from "./log-parser-options-schema";
 import { TransportInterface } from "../transports/transport.interface";
-// {OnigRegExp, OnigScanner} = require 'oniguruma'
 
-
-// Object.getOwnPropertyDescriptor(OnigString.prototype, 'length')
 export interface LogParserOptionsInterface {
   inputFile: string;
   level: LogLevel;
