@@ -4,6 +4,7 @@ import { JsonLogFile } from "./transports/json-log-file";
 import { JsonLogParser } from "./log-parser/json-log-parser";
 import { LogEventFormatter } from "./log-event-formatter";
 import { DEFAULT_JSON_PATTERN, LogLevel } from "./utils/constants";
+import {LogEventInterface} from "./log-event-formatter/log-event.interface";
 
 const commandLineOptions = commandLineArgs([
   { name: 'input', type: String },
@@ -14,7 +15,7 @@ const parser = createLogParser({
   inputFile: commandLineOptions.input,
   level: LogLevel.ERROR,
   parser: new JsonLogParser(DEFAULT_JSON_PATTERN),
-  formatter: (log: any): string => new LogEventFormatter(log).toString(),
+  formatter: (log: LogEventInterface): string => new LogEventFormatter(log).toString(),
   transports: [
     new JsonLogFile({ filename: commandLineOptions.output })
   ],
